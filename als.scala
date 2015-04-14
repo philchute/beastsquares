@@ -8,6 +8,9 @@ import org.apache.spark.mllib.recommendation._
 import org.apache.spark.rdd.RDD
 
 object Main{
+   val conf = new SparkConf().setAppName("als")
+   // Create a Scala Spark Context.
+   val sc = new SparkContext(conf)
    val rawUserArtistData = sc.textFile("s3n://beastsquares/user_artist_data.txt")
    rawUserArtistData.map(_.split(' ')(0).toDouble).stats()
    rawUserArtistData.map(_.split(' ')(1).toDouble).stats()
