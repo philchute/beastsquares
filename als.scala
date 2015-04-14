@@ -8,6 +8,8 @@ import org.apache.spark.mllib.recommendation._
 import org.apache.spark.rdd.RDD
 
 object Main{
+       def main(args: Array[String]) {
+
    val conf = new SparkConf().setAppName("als")
    // Create a Scala Spark Context.
    val sc = new SparkContext(conf)
@@ -46,13 +48,13 @@ object Main{
 
    import org.apache.spark.mllib.recommendation._
    val bArtistAlias = sc.broadcast(artistAlias)
-   val trainData = rawUserArtistData.map { line =>
+   val trainData1 = rawUserArtistData.map { line =>
        val Array(userID, artistID, count) = line.split(' ').map(_.toInt)
        val finalArtistID = bArtistAlias.value.getOrElse(artistID, artistID)
        Rating(userID, finalArtistID, count)
    }.cache( )
 
-   val model = ALS.trainImplicit(trainData, 10, 5, 0.01, 1.0)
+   val model = ALS.trainImplicit(trainData1, 10, 5, 0.01, 1.0)
    model.userFeatures.mapValues(_.mkString(", ")).first()
 
    //1000019
@@ -187,4 +189,5 @@ object Main{
          ((rank, lambda, alpha), auc)
       }
    evaluations.sortBy(_._2).reverse.foreach(println)
+}
 }
