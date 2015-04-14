@@ -148,7 +148,7 @@ object Main{
 
    val allItemIDs = allData.map(_.product).distinct().collect()
    val bAllItemIDs = sc.broadcast(allItemIDs)
-   val model = ALS.trainImplicit(trainData, 10, 5, 0.01, 1.0)
+   //val model = ALS.trainImplicit(trainData, 10, 5, 0.01, 1.0)
    val auc1 = areaUnderCurve(cvData, bAllItemIDs, model.predict)
 
    def predictMostListened(sc: SparkContext, train: RDD[Rating])(allData: RDD[(Int,Int)]) = {
