@@ -10,7 +10,7 @@ import org.apache.spark.rdd.RDD
 object Main{
        def main(args: Array[String]) {
 
-   val conf = new SparkConf().setAppName("als")
+   val conf = new SparkConf().setMaster("local").setAppName("als")
    // Create a Scala Spark Context.
    val sc = new SparkContext(conf)
    val rawUserArtistData = sc.textFile("s3n://beastsquares/user_artist_data.txt")
